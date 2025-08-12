@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #fffaf5;
+    }
+    .hero {
+        background: url("{{ url_for('static', filename='images/hero-bg.jpg') }}") center/cover no-repeat;
+        color: white;
+        text-align: center;
+        padding: 100px 20px;
+        border-radius: 0 0 30px 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .hero h2 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+    }
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+    .cta {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    .btn {
+        padding: 10px 20px;
+        background: #ff6600;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+    }
+    .btn:hover {
+        background: #e55b00;
+    }
+    .btn.ghost {
+        background: transparent;
+        border: 2px solid white;
+    }
+    .features {
+        text-align: center;
+        padding: 40px 20px;
+    }
+    .features h3 {
+        color: #b33c00;
+        font-size: 2rem;
+    }
+    .features ul {
+        list-style: none;
+        padding: 0;
+        font-size: 1.1rem;
+    }
+    .features li {
+        padding: 5px 0;
+    }
+    .menu-section {
+        background: #fff;
+        padding: 50px 20px;
+    }
+    .menu-section h3 {
+        text-align: center;
+        color: #b33c00;
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        max-width: 1100px;
+        margin: auto;
+    }
+    .menu-item {
+        background: #fffaf5;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+        text-align: center;
+    }
+    .menu-item:hover {
+        transform: scale(1.05);
+    }
+    .menu-item img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .menu-item h4 {
+        margin: 10px 0 5px;
+        color: #b33c00;
+    }
+    .menu-item p {
+        font-size: 0.9rem;
+        color: #666;
+        padding: 0 10px 10px;
+    }
+    .menu-item a {
+        display: inline-block;
+        margin-bottom: 15px;
+        padding: 8px 15px;
+        background: #ff6600;
+        color: white;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+    }
+    .menu-item a:hover {
+        background: #e55b00;
+    }
+</style>
+
+<section class="hero">
+    <h2>Welcome to My Restaurant</h2>
+    <p>Fresh food • Quick service • Great taste</p>
+    <div class="cta">
+        {% if 'username' in session %}
+            <a class="btn" href="{{ url_for('order') }}">Order Now</a>
+        {% else %}
+            <a class="btn" href="{{ url_for('menu') }}">See Menu</a>
+        {% endif %}
+        <a class="btn ghost" href="{{ url_for('contact') }}">Contact Us</a>
+    </div>
+</section>
+
+<section class="features">
+    <h3>What we offer</h3>
+    <ul>
+        <li>Daily fresh meals</li>
+        <li>Easy online ordering</li>
+        <li>Secure (mock) payments</li>
+        <li>Home delivery in under 30 minutes</li>
+        <li>Special discounts for members</li>
+    </ul>
+</section>
+
+<section class="menu-section">
+    <h3>Our Popular Menu</h3>
+    <div class="menu-grid">
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/pizza.png') }}" alt="Pizza">
+            <h4>Cheese Pizza</h4>
+            <p>Loaded with mozzarella and fresh basil.</p>
+            <a href="{{ url_for('menu') }}">View Menu</a>
+        </div>
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/burger.png') }}" alt="Burger">
+            <h4>Classic Burger</h4>
+            <p>Juicy beef patty with crispy lettuce & cheese.</p>
+            <a href="{{ url_for('menu') }}">View Menu</a>
+        </div>
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/pasta.png') }}" alt="Pasta">
+            <h4>Italian Pasta</h4>
+            <p>Rich tomato sauce with parmesan cheese.</p>
+            <a href="{{ url_for('menu') }}">View Menu</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Smooth scroll animation for buttons linking to sections
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute("href")).scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+    });
+</script>
+{% endblock %}

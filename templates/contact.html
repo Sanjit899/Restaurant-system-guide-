@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="contact-container">
+  <h2>📞 Contact Us</h2>
+  <p class="intro-text">We’d love to hear from you! Fill out the form below and we’ll get back to you soon.</p>
+
+  <!-- Contact Image -->
+  <div class="contact-image">
+    <img src="{{ url_for('static', filename='images/waiter.png') }}" alt="Contact Us">
+  </div>
+
+  <form class="contact-form" method="POST" action="{{ url_for('contact') }}" onsubmit="return validateForm()">
+    <label>Your name</label>
+    <input type="text" id="name" name="name" placeholder="John Doe" required>
+
+    <label>Your email</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+    <label>Message</label>
+    <textarea id="message" name="message" rows="5" placeholder="Type your message here..." required></textarea>
+
+    <div class="form-actions">
+      <button class="btn" type="submit">Send Message</button>
+    </div>
+  </form>
+
+  <!-- Contact Information -->
+  <section class="contact-info">
+    <h3>Other ways to reach us</h3>
+    <p><strong>Email:</strong> contact@myrestaurant.example</p>
+    <p><strong>Phone:</strong> +1 555 123 4567</p>
+    <p><strong>Address:</strong> 123 Food Street, Flavor Town</p>
+  </section>
+</div>
+
+<!-- CSS -->
+<style>
+.contact-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.contact-container h2 {
+  text-align: center;
+  color: #d35400;
+  margin-bottom: 10px;
+}
+.intro-text {
+  text-align: center;
+  color: #555;
+  margin-bottom: 20px;
+}
+.contact-image {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.contact-image img {
+  width: 80%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.contact-form label {
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+  display: block;
+}
+.contact-form input, 
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: 0.3s;
+}
+.contact-form input:focus, 
+.contact-form textarea:focus {
+  border-color: #e67e22;
+  outline: none;
+  box-shadow: 0 0 8px rgba(230,126,34,0.3);
+}
+.btn {
+  background: #e67e22;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn:hover {
+  background: #d35400;
+}
+.contact-info {
+  margin-top: 30px;
+  background: #fdf2e9;
+  padding: 15px;
+  border-radius: 10px;
+}
+.contact-info h3 {
+  margin-bottom: 10px;
+  color: #c0392b;
+}
+</style>
+
+<!-- JavaScript Validation -->
+<script>
+function validateForm() {
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let message = document.getElementById("message").value.trim();
+
+    if (name.length < 3) {
+        alert("Name must be at least 3 characters long.");
+        return false;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+    if (message.length < 10) {
+        alert("Message must be at least 10 characters long.");
+        return false;
+    }
+
+    alert("✅ Your message has been sent successfully!");
+    return true;
+}
+</script>
+{% endblock %}

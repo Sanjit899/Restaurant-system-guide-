@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  .order-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: auto;
+    animation: fadeIn 0.6s ease-in-out;
+  }
+  h2 {
+    text-align: center;
+    color: #ff6600;
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  .order-image {
+    width: 100%;
+    max-height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+  .form label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+  }
+  .form input, .form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+  }
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .btn {
+    background: #ff6600;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+  }
+  .btn:hover {
+    background: #e65c00;
+  }
+  .price-display {
+    font-weight: bold;
+    color: green;
+    margin-top: 10px;
+  }
+  .note {
+    background: #fff7e6;
+    padding: 10px;
+    margin-top: 20px;
+    border-left: 4px solid #ff9900;
+    border-radius: 6px;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div class="order-container">
+  <h2>Place Your Order</h2>
+
+  <img src="{{ url_for('static', filename='images/banner.png') }}" alt="Order" class="order-image">
+
+  <form class="form" method="POST" action="{{ url_for('order') }}">
+    <label for="item">Select Item</label>
+    <select id="item" name="item" required>
+      <option value="">-- Choose a Dish --</option>
+      <option value="Margherita Pizza" data-price="300">Margherita Pizza - ₹300</option>
+      <option value="Pasta Alfredo" data-price="250">Pasta Alfredo - ₹250</option>
+      <option value="Veg Burger" data-price="150">Veg Burger - ₹150</option>
+      <option value="Paneer Tikka" data-price="200">Paneer Tikka - ₹200</option>
+    </select>
+
+    <label>Quantity</label>
+    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+
+    <p class="price-display">Total: ₹<span id="totalPrice">0</span></p>
+
+    <div class="form-actions">
+      <button class="btn" type="submit">Place Order</button>
+      <a class="btn" style="background: gray;" href="{{ url_for('payment') }}">Go to Payment</a>
+    </div>
+  </form>
+
+  <section class="note">
+    <p><strong>Note:</strong> Orders are saved in SQLite (local). Payment page is just a mock example.</p>
+  </section>
+</div>
+
+<script>
+  const itemSelect = document.getElementById('item');
+  const quantityInput = document.getElementById('quantity');
+  const totalPrice = document.getElementById('totalPrice');
+
+  function updatePrice() {
+    const selectedOption = itemSelect.options[itemSelect.selectedIndex];
+    const price = selectedOption.getAttribute('data-price') || 0;
+    const quantity = quantityInput.value || 1;
+    totalPrice.textContent = price * quantity;
+  }
+
+  itemSelect.addEventListener('change', updatePrice);
+  quantityInput.addEventListener('input', updatePrice);
+</script>
+
+{% endblock %}

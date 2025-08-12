@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .about-container {
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+        font-family: 'Segoe UI', sans-serif;
+        color: #333;
+        background: #fffaf5;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #b33c00;
+        font-size: 2.2rem;
+    }
+    .story, .mission, .team {
+        margin-top: 20px;
+        padding: 15px;
+    }
+    .section-title {
+        border-left: 5px solid #ff6600;
+        padding-left: 10px;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #ff6600;
+    }
+    .team-members {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .team-card {
+        text-align: center;
+        width: 200px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        padding: 10px;
+        transition: transform 0.3s;
+    }
+    .team-card:hover {
+        transform: scale(1.05);
+    }
+    .team-card img {
+        width: 100%;
+        border-radius: 50%;
+        height: 150px;
+        object-fit: cover;
+    }
+    .team-card h4 {
+        margin: 10px 0 5px;
+        color: #b33c00;
+    }
+    .team-card p {
+        font-size: 0.9rem;
+        color: #666;
+    }
+    .gallery {
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    .gallery img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+    }
+    .gallery img:hover {
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="about-container">
+    <h2>About Us</h2>
+    <div class="story">
+        <h3 class="section-title">Our Story</h3>
+        <p>My Restaurant started as a small kitchen project, serving delicious homemade recipes to friends and family. Over time, our love for food and customer happiness inspired us to grow into a full-fledged restaurant experience — and now, a fun learning project for full-stack developers!</p>
+    </div>
+
+    <div class="mission">
+        <h3 class="section-title">Our Mission</h3>
+        <p>We aim to bring you fresh, mouth-watering dishes with lightning-fast delivery. Whether you're a foodie or just hungry, we want every bite to feel like home.</p>
+    </div>
+
+    <div class="team">
+        <h3 class="section-title">Meet the Team</h3>
+        <div class="team-members">
+            <div class="team-card">
+                <img src="{{ url_for('static', filename='images/chef.png') }}" alt="Chef">
+                <h4>Chef Mario</h4>
+                <p>Head Chef</p>
+            </div>
+            <div class="team-card">
+                <img src="{{ url_for('static', filename='images/manager.png') }}" alt="Manager">
+                <h4>Linda</h4>
+                <p>Restaurant Manager</p>
+            </div>
+            <div class="team-card">
+                <img src="{{ url_for('static', filename='images/waiter.png') }}" alt="Waiter">
+                <h4>Sam</h4>
+                <p>Customer Service</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="gallery">
+        <img src="{{ url_for('static', filename='images/pizza.png') }}" alt="Pizza">
+        <img src="{{ url_for('static', filename='images/burger.png') }}" alt="Burger">
+        <img src="{{ url_for('static', filename='images/pasta.png') }}" alt="Pasta">
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(".story, .mission, .team, .gallery img");
+        sections.forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = "translateY(20px)";
+            setTimeout(() => {
+                el.style.transition = "all 0.6s ease";
+                el.style.opacity = 1;
+                el.style.transform = "translateY(0)";
+            }, 200);
+        });
+    });
+</script>
+{% endblock %}

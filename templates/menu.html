@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #fffaf5;
+        margin: 0;
+        padding: 0;
+    }
+    .menu-header {
+        text-align: center;
+        padding: 40px 20px 20px;
+    }
+    .menu-header h2 {
+        font-size: 2.5rem;
+        color: #b33c00;
+    }
+    .menu-header p {
+        font-size: 1.2rem;
+        color: #666;
+    }
+    .filter-buttons {
+        text-align: center;
+        margin: 20px 0;
+    }
+    .filter-buttons button {
+        padding: 8px 15px;
+        margin: 5px;
+        background: #ff6600;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .filter-buttons button:hover {
+        background: #e55b00;
+    }
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        max-width: 1100px;
+        margin: auto;
+        padding: 20px;
+    }
+    .menu-item {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: transform 0.3s;
+    }
+    .menu-item:hover {
+        transform: scale(1.05);
+    }
+    .menu-item img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .menu-item h4 {
+        margin: 10px 0 5px;
+        color: #b33c00;
+    }
+    .menu-item p {
+        font-size: 0.9rem;
+        color: #666;
+        padding: 0 10px 10px;
+    }
+    .menu-item span {
+        display: block;
+        font-weight: bold;
+        color: #ff6600;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="menu-header">
+    <h2>Our Menu</h2>
+    <p>Fresh, delicious, and made with love.</p>
+</div>
+
+<div class="filter-buttons">
+    <button onclick="filterMenu('all')">All</button>
+    <button onclick="filterMenu('pizza')">Pizza</button>
+    <button onclick="filterMenu('burger')">Burgers</button>
+    <button onclick="filterMenu('pasta')">Pasta</button>
+</div>
+
+<div class="menu-grid">
+    <div class="menu-item" data-category="pizza">
+        <img src="{{ url_for('static', filename='images/pizza1.png') }}" alt="Pizza">
+        <h4>Cheese Pizza</h4>
+        <p>Loaded with mozzarella and fresh basil.</p>
+        <span>$9.99</span>
+    </div>
+    <div class="menu-item" data-category="burger">
+        <img src="{{ url_for('static', filename='images/burger.png') }}" alt="Burger">
+        <h4>Classic Burger</h4>
+        <p>Juicy beef patty with crispy lettuce & cheese.</p>
+        <span>$7.99</span>
+    </div>
+    <div class="menu-item" data-category="pasta">
+        <img src="{{ url_for('static', filename='images/pasta.png') }}" alt="Pasta">
+        <h4>Italian Pasta</h4>
+        <p>Rich tomato sauce with parmesan cheese.</p>
+        <span>$8.49</span>
+    </div>
+    <div class="menu-item" data-category="pizza">
+        <img src="{{ url_for('static', filename='images/pizza2.png') }}" alt="Pepperoni Pizza">
+        <h4>Pepperoni Pizza</h4>
+        <p>Spicy pepperoni and cheese delight.</p>
+        <span>$10.49</span>
+    </div>
+    <div class="menu-item" data-category="burger">
+        <img src="{{ url_for('static', filename='images/chicken_B.png') }}" alt="Chicken Burger">
+        <h4>Chicken Burger</h4>
+        <p>Grilled chicken breast with creamy mayo.</p>
+        <span>$8.99</span>
+    </div>
+    <div class="menu-item" data-category="pasta">
+        <img src="{{ url_for('static', filename='images/creamy-pasta.png') }}" alt="Creamy Pasta">
+        <h4>Creamy Alfredo Pasta</h4>
+        <p>Delicious cream sauce with mushrooms.</p>
+        <span>$9.49</span>
+    </div>
+</div>
+
+<script>
+    function filterMenu(category) {
+        let items = document.querySelectorAll('.menu-item');
+        items.forEach(item => {
+            if (category === 'all' || item.getAttribute('data-category') === category) {
+                item.style.display = 'block';
+                item.style.opacity = 1;
+            } else {
+                item.style.display = 'none';
+                item.style.opacity = 0;
+            }
+        });
+    }
+</script>
+{% endblock %}

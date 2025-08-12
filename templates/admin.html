@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="admin-header">
+  <img src="{{ url_for('static', filename='images/chef.png') }}" alt="Admin Icon" class="admin-icon">
+  <h2>Admin Panel</h2>
+</div>
+
+<!-- Orders Section -->
+<section class="admin-section">
+  <h3>Orders</h3>
+
+  <input type="text" id="orderSearch" class="search-box" placeholder="Search orders by user or item...">
+
+  {% if orders %}
+    <table class="admin-table" id="ordersTable">
+      <thead>
+        <tr><th>ID</th><th>User</th><th>Item</th><th>Qty</th></tr>
+      </thead>
+      <tbody>
+        {% for o in orders %}
+        <tr>
+          <td>{{ o[0] }}</td>
+          <td>{{ o[1] }}</td>
+          <td>{{ o[2] }}</td>
+          <td>{{ o[3] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No orders yet.</p>
+  {% endif %}
+</section>
+
+<!-- Messages Section -->
+<section class="admin-section">
+  <h3>Messages</h3>
+
+  <input type="text" id="messageSearch" class="search-box" placeholder="Search messages by name or email...">
+
+  {% if messages %}
+    <table class="admin-table" id="messagesTable">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Email</th><th>Message</th></tr>
+      </thead>
+      <tbody>
+        {% for m in messages %}
+        <tr>
+          <td>{{ m[0] }}</td>
+          <td>{{ m[1] }}</td>
+          <td>{{ m[2] }}</td>
+          <td>{{ m[3] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No messages yet.</p>
+  {% endif %}
+</section>
+
+<style>
+  .admin-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .admin-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .admin-section {
+    margin-top: 20px;
+  }
+  .search-box {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .admin-table th, .admin-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  .admin-table th {
+    background-color: #f4f4f4;
+  }
+  .admin-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  @media (max-width: 768px) {
+    .admin-table, .admin-table thead, .admin-table tbody, .admin-table th, .admin-table td, .admin-table tr {
+      display: block;
+      width: 100%;
+    }
+    .admin-table tr {
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+    .admin-table td {
+      border: none;
+      padding-left: 50%;
+      position: relative;
+    }
+    .admin-table td::before {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 45%;
+      font-weight: bold;
+    }
+  }
+</style>
+
+<script>
+  // Filter Orders
+  document.getElementById("orderSearch").addEventListener("keyup", function() {
+    let filter = this.value.toLowerCase();
+    let rows = document.querySelectorAll("#ordersTable tbody tr");
+    rows.forEach(row => {
+      let text = row.innerText.toLowerCase();
+      row.style.display = text.includes(filter) ? "" : "none";
+    });
+  });
+
+  // Filter Messages
+  document.getElementById("messageSearch").addEventListener("keyup", function() {
+    let filter = this.value.toLowerCase();
+    let rows = document.querySelectorAll("#messagesTable tbody tr");
+    rows.forEach(row => {
+      let text = row.innerText.toLowerCase();
+      row.style.display = text.includes(filter) ? "" : "none";
+    });
+  });
+</script>
+
+{% endblock %}

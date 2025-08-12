@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .payment-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  .payment-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .payment-header img {
+    width: 80px;
+    margin-bottom: 10px;
+  }
+
+  .payment-header h2 {
+    font-size: 24px;
+    color: #333;
+  }
+
+  .form label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #555;
+  }
+
+  .form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: border 0.3s ease;
+  }
+
+  .form input:focus {
+    border-color: #ff7f50;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(255,127,80,0.4);
+  }
+
+  .form-actions {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .btn {
+    background: #ff7f50;
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .btn:hover {
+    background: #e96f43;
+  }
+
+  .muted {
+    font-size: 14px;
+    color: #777;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div class="payment-container">
+  <div class="payment-header">
+    <img src="{{ url_for('static', filename='images/manager.png') }}" alt="Payment Icon">
+    <h2>Secure Payment</h2>
+    <p style="color:#666;">This is a mock payment page for demo purposes. No real transactions occur here.</p>
+  </div>
+
+  <form class="form" id="paymentForm" method="GET" action="{{ url_for('index') }}">
+    <label>Cardholder Name</label>
+    <input type="text" name="cardname" required>
+
+    <label>Card Number</label>
+    <input type="text" name="cardnumber" placeholder="4242 4242 4242 4242" maxlength="19" required>
+
+    <label>Expiry (MM/YY)</label>
+    <input type="text" name="expiry" placeholder="MM/YY" maxlength="5" required>
+
+    <label>CVC</label>
+    <input type="text" name="cvc" placeholder="123" maxlength="3" required>
+
+    <div class="form-actions">
+      <button class="btn" type="submit">Pay (Mock)</button>
+    </div>
+  </form>
+
+  <p class="muted">After mock payment you'll be redirected to home.</p>
+</div>
+
+<script>
+  document.getElementById('paymentForm').addEventListener('submit', function(e) {
+    const cardNumber = document.querySelector('input[name="cardnumber"]').value.replace(/\s+/g, '');
+    const expiry = document.querySelector('input[name="expiry"]').value;
+    const cvc = document.querySelector('input[name="cvc"]').value;
+
+    if (!/^\d{16}$/.test(cardNumber)) {
+      alert('Invalid card number. Please enter a 16-digit number.');
+      e.preventDefault();
+      return;
+    }
+
+    if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+      alert('Invalid expiry date format. Use MM/YY.');
+      e.preventDefault();
+      return;
+    }
+
+    if (!/^\d{3}$/.test(cvc)) {
+      alert('Invalid CVC. Must be 3 digits.');
+      e.preventDefault();
+      return;
+    }
+
+    alert('Payment processed successfully! (Mock)');
+  });
+
+  document.querySelector('input[name="cardnumber"]').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '').substring(0,16);
+    e.target.value = value.replace(/(.{4})/g, '$1 ').trim();
+  });
+</script>
+{% endblock %}

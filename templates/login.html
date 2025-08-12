@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #fffaf5;
+    }
+    .login-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 80vh;
+        background: url("{{ url_for('static', filename='images/login-bg.jpg') }}") center/cover no-repeat;
+        padding: 20px;
+    }
+    .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 400px;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    .login-card h2 {
+        text-align: center;
+        color: #b33c00;
+        margin-bottom: 20px;
+    }
+    .form label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: bold;
+    }
+    .form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border 0.3s;
+    }
+    .form input:focus {
+        border-color: #ff6600;
+        outline: none;
+        box-shadow: 0 0 5px rgba(255,102,0,0.5);
+    }
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .btn {
+        padding: 10px 20px;
+        background: #ff6600;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background 0.3s;
+    }
+    .btn:hover {
+        background: #e55b00;
+    }
+    .link {
+        color: #ff6600;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+    .link:hover {
+        text-decoration: underline;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+        <h2>Login</h2>
+        <form class="form" method="POST" action="{{ url_for('login') }}">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Enter username" required>
+
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter password" required>
+
+            <div class="form-actions">
+                <button class="btn" type="submit">Login</button>
+                <a class="link" href="{{ url_for('register') }}">Create account</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
